@@ -8,8 +8,11 @@
 // .service()
 
 angular.module('starter', ['ionic'])
-
-.run(function($ionicPlatform, $http, $rootScope) {
+.constant('ApiEndpoint', {
+  url: 'http://demo.localhost/api'
+  // url: '/api'
+})
+.run(function($ionicPlatform, $http, $rootScope, ApiEndpoint) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -23,16 +26,18 @@ angular.module('starter', ['ionic'])
 
 
 // CORS 요청 데모
-// var API_ENDPOINT = "http://boot2docker:7000/api";
-var API_ENDPOINT = "http://localhost:8100/api";
-$http.get(API_ENDPOINT + '/data.json').
+$http.get(ApiEndpoint.url + '/data.json').
   success(function(data, status, headers, config) {
-    console.log(data)
+    console.log(config);
+    console.log(status);
+    console.log(data);
     $rootScope.name = data.name;
     $rootScope.email= data.email;
     $rootScope.blog = data.blog;
   }).
   error(function(data, status, headers, config) {
+    console.log(config);
+    console.log(status);
     console.log(data);
   });
 

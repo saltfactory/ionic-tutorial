@@ -6,12 +6,19 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var fs = require('fs');
+var replace = require('gulp-replace');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  replaceFile: './www/js/app.js',
+  replacesDest:['./platforms/ios/www/js', './platforms/android/assets/www/js'],
+  project:'./ionic.project'
 };
 
-gulp.task('default', ['sass']);
+var projectInfo = JSON.parse(fs.readFileSync(paths.project));
+
+gulp.task('default', ['sass', 'prepare', 'remove-proxy']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -50,3 +57,14 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('prepare', function(){
+  return sh.exec('ionic prepare', {async:false});
+});
+
+gulp.task('remove-proxy', function() {
+  gulp.src(paths.replaceFile)
+    .pipe(replace(projectInfo.proxies[0].path, projectInfo.proxies[0].proxyUrl))
+    .pipe(gulp.dest(paths.replacesDest[0]))
+    .pipe(gulp.dest(paths.replacesDest[1]));
+})
