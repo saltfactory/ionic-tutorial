@@ -9,8 +9,7 @@
 
 angular.module('starter', ['ionic'])
 .constant('ApiEndpoint', {
-  url: 'http://demo.localhost/api'
-  // url: '/api'
+  url: '/api'
 })
 .run(function($ionicPlatform, $http, $rootScope, ApiEndpoint) {
   $ionicPlatform.ready(function() {
@@ -25,21 +24,21 @@ angular.module('starter', ['ionic'])
 
 
 
-// CORS 요청 데모
-$http.get(ApiEndpoint.url + '/data.json').
-  success(function(data, status, headers, config) {
-    console.log(config);
-    console.log(status);
-    console.log(data);
-    $rootScope.name = data.name;
-    $rootScope.email= data.email;
-    $rootScope.blog = data.blog;
-  }).
-  error(function(data, status, headers, config) {
-    console.log(config);
-    console.log(status);
-    console.log(data);
-  });
+    // CORS 요청 데모
+    $http.get(ApiEndpoint.url + '/data.json').
+      success(function(data, status, headers, config) {
+        console.log(config);
+        console.log(status);
+        console.log(data);
+        $rootScope.name = data.name;
+        $rootScope.email= data.email;
+        $rootScope.blog = data.blog;
+      }).
+      error(function(data, status, headers, config) {
+        console.log(config);
+        console.log(status);
+        console.log(data);
+      });
 
-  });
+      });
 })

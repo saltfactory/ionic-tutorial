@@ -10,6 +10,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var sh = require('shelljs');
 
 var rootdir = process.argv[2];
 
@@ -84,6 +85,7 @@ if (rootdir) {
 
       if(fs.existsSync(indexPath)) {
         addPlatformBodyTag(indexPath, platform);
+        sh.exec('gulp remove-proxy', {async:false});
       }
 
     } catch(e) {

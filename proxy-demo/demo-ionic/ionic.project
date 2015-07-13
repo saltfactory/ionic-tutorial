@@ -1,10 +1,19 @@
 {
   "name": "demo-ionic",
   "app_id": "",
-  "proxies":[
+  "proxies": [
     {
-      "path":"/api",
-      "proxyUrl":"http://demo.localhost/api"
+      "path": "/api",
+      "proxyUrl": "http://demo.docker.localhost/api"
     }
+  ],
+  "gulpStartupTasks": [
+    "sass",
+    "watch",
+    "remove-proxy"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/js/app.js"
   ]
 }
